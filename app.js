@@ -1,23 +1,47 @@
+const scriptURL = "https://script.google.com/macros/s/AKfycbxw9TewmvRqq8wEBQBCu9uOMJ1DR0FLJr8t3azHHJ-S/dev";
+
 const parentElement = document.getElementById("parentElement");
 const showMessage = document.getElementById("showMessage");
+const changeColor = document.body.style;
 
-function propose() {
-    parentElement.style.display = "none";
-    showMessage.style.display = "block";
-    document.body.style.background = "linear-gradient(116.82deg, #ff94e7 0%, #27cbff 100%)";
+propose = () => {
+  // Send response to Google Sheets & trigger email
+  fetch(scriptURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: "Your Crush", response: "Yes" }),
+  })
+    .then(response => response.text())
+    .then(data => console.log("Response Saved & Email Sent:", data))
+    .catch(error => console.error("Error:", error));
 
-    // Confetti Animation 🎉
-    confetti({
-        particleCount: 200,
-        spread: 100,
-        origin: { y: 0.6 }
-    });
+  // Hide proposal section and show confirmation
+  parentElement.style.display = "none";
+  showMessage.style.display = "block";
+  changeColor.background =
+    "linear-gradient(116.82deg, #ff94e7 0%, #27cbff 100%)";
+};
 
-    // Google Sheets API Call (Data Save + Email Notification)
-    fetch("https://script.google.com/macros/s/AKfycbwwbWDJXZtc5HrgwNmY9s-0wUKxQm2kpAacZUWZ0mxwRwABDTQ8Whdfv98YsflBVYZaBg/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: "My Crush", response: "Yes! ❤️" })
-    });
-}
+// Animate Text with Anim JS
+var textWrapper = document.querySelector(".ml6 .letters");
+textWrapper.innerHTML = textWrapper.textContent.replace(
+  /\S/g,
+  "<span class='letter'>$&</span>"
+);
+
+anime
+  .timeline({ loop: true })
+  .add({
+    targets: ".ml6 .letter",
+    translateY: ["1.1em", 0],
+    translateZ: 0,
+    duration: 750,
+    delay: (el, i) => 50 * i,
+  })
+  .add({
+    targets: ".ml6",
+    opacity: 0,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000,
+  });
