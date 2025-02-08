@@ -14,7 +14,7 @@ function propose() {
     });
 
     // Google Sheets API Call (Data Save + Email Notification)
-    fetch("https://script.google.com/macros/s/AKfycbxWpLY74mJvJzUisyZxvAR46SUDewJZAQ7MmCf3XAjnfB-jxAyL-1hw_OQ4FySq0pSxDQ/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzxRqUNbldhR3FTdmryWFJs3iCpvdXAp6XSStLYCrha0KL6b82X_6PasH042JhCK6GAeA/exec", {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
